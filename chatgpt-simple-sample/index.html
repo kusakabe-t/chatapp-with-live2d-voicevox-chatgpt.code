@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+</head>
+<body>
+  <div id="openai-status"></div>
+  <div style="display: flex;">
+    <input type="text" id="input" required>
+    <button id="button">返答</button>
+  </div>
+
+  <div>
+    <p>会話履歴</p>
+    <div id="conversation-history"></div>
+  </div>
+
+
+<script type="module">
+  import { chatCompletion, fetchOpenAIHealthCheckAPI, getCharacterPrompt } from './src/main.ts'
+
+  const characterPrompt = getCharacterPrompt()
+
+  let messages = [
+    { role: "system", content: characterPrompt },
+  ]
+
+  const conversationHistory = document.getElementById('conversation-history')
+  const inputElement = document.getElementById('input')
+
+  window.onload = async () => {
+    const openAIStatusElement = document.getElementById('openai-status')
+    const openAIHealthCheckAPI = await fetchOpenAIHealthCheckAPI()
+
+    openAIStatusElement.innerText = `${openAIHealthCheckAPI.name}: ${openAIHealthCheckAPI.status}`
+  }
+
+  document.getElementById('button').addEventListener('click', async () => {
+    const message = inputElement.value
+
+    messages.push({ role: "user", content: message })
+    conversationHistory.innerHTML += `<div>ユーザー: ${message}</div>`
+
+    const response = await chatCompletion(messages)
+    console.log(response)
+    messages.push({ role: "assistant", content: response.content })
+    const { emotion, content } = JSON.parse(response.content)
+    conversationHistory.innerHTML += `<div>ひより(${emotion}): ${content}</div>`
+  })
+</script>
+</body>
+</html>

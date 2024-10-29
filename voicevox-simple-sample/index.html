@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <div style='display: flex;'>
+    <select id="speakers-select-box"></select>
+    <input type="text" id="input" required>
+    <button id="button">音声化</button>
+  </div>
+</body>
+
+<script type="module">
+  import { getVoicevoxSpeakers, playAudioMessage } from './src/main.ts'
+
+  const speakerSelectBox = document.getElementById('speakers-select-box')
+  const input = document.getElementById('input')
+  const button = document.getElementById('button')
+
+  window.onload = async () => {
+    const speakers = await getVoicevoxSpeakers()
+
+    speakers.forEach(speaker => {
+      speaker.styles.forEach(style => {
+        const speakerItemOption = document.createElement('option')
+        speakerItemOption.text = `${speaker.name} (${style.name})`
+        speakerItemOption.value = style.id
+        speakerSelectBox.appendChild(speakerItemOption)
+      })
+    })
+  }
+
+  document.getElementById('button').addEventListener('click', () => {
+    playAudioMessage(input.value, speakerSelectBox.value)
+  })
+</script>
+</html>

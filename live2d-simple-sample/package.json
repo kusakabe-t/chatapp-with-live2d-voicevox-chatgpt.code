@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "build:prod": "vite build",
+    "lint": "eslint src --ext .ts",
+    "serve": "vite preview --port 5000 --host"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "7.2.0",
+    "@typescript-eslint/parser": "7.2.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-prettier": "5.1.3",
+    "prettier": "3.2.5",
+    "typescript": "5.4.2",
+    "vite": "5.1.6"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
+  }
+}

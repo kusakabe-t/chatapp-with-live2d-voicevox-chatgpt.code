@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TypeScript HTML App</title>
+  <style>
+    html, body {
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+    }
+  </style>
+  <!-- Live2DCubismCore script -->
+  <script src = "./live2dcubismcore.min.js"></script>
+  <!-- Build script -->
+  <script src = "./src/main.ts" type="module"></script>
+</head>
+<body>
+  <button id="sad">sadモーション</button>
+  <button id="smile">smileモーション</button>
+  <button id="angry">angryモーション</button>
+</body>
+<script type="module">
+  import { sadAnimation, angryAnimation, smileAnimation } from './src/main.ts'
+
+  document.getElementById("sad").addEventListener('click', () => {
+    sadAnimation()
+  })
+
+  document.getElementById("smile").addEventListener('click', () => {
+    smileAnimation()
+  })
+
+  document.getElementById("angry").addEventListener('click', () => {
+    angryAnimation()
+  })
+</script>
+</html>
